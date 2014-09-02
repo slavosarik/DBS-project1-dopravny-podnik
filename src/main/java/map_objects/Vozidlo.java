@@ -1,9 +1,6 @@
 package map_objects;
 
-import java.sql.Date;
 import java.util.Set;
-
-
 
 public class Vozidlo {
 	private int id_vozidlo, vozidlo_cislo, id_modely;
@@ -13,7 +10,7 @@ public class Vozidlo {
 	private Set<Porucha> poruchy;
 	private Set<Vyprava> vypravy;
 	private Model model;
-	
+
 	public int getId_vozidlo() {
 		return id_vozidlo;
 	}
@@ -37,8 +34,6 @@ public class Vozidlo {
 	public void setId_modely(int id_modely) {
 		this.id_modely = id_modely;
 	}
-
-
 
 	public String getVozovna() {
 		return vozovna;

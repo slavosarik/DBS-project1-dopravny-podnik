@@ -1,23 +1,20 @@
 package logic;
 
-
-import java.awt.event.*;
-import javax.swing.*;
-
-import map_objects.Vyprava;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-
-import database.TableManager;
-import gui.*;
-import vozidla.*;
-import java.sql.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.Calendar;
 
-import vyprava.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import vyprava.VypravaGui;
+import vyprava.VypravaPridanie;
+import vyprava.VypravaZmena;
+import database.TableManager;
 
 public class VypravaLogika {
 
@@ -29,6 +26,7 @@ public class VypravaLogika {
 	private String lastUsedString = query;
 	private TableManager tableManager;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VypravaLogika() throws SQLException {
 		tableManager = TableManager.getSingletonObject();
 		vg = new VypravaGui();
@@ -100,8 +98,10 @@ public class VypravaLogika {
 						+ vp.getDateChooser().getCalendar().get(Calendar.YEAR)
 						+ "-"
 						+ (vp.getDateChooser().getCalendar()
-								.get(Calendar.MONTH) + 1) + "-"+ vp.getDateChooser().getCalendar()
-										.get(Calendar.DATE) + "')";
+								.get(Calendar.MONTH) + 1)
+						+ "-"
+						+ vp.getDateChooser().getCalendar().get(Calendar.DATE)
+						+ "')";
 				System.out.println("Queryyyyyy: " + query);
 				try {
 					tableManager.insert(table, query);
@@ -129,22 +129,19 @@ public class VypravaLogika {
 	private void registerButtonsVyprava() {
 		vg.getBtnNewButton_3().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*String q = "SELECT znacka_name, model_name FROM vyprava v"
-						+ " JOIN linka l ON l.id_linka = v.id_linky"
-						+ " JOIN vozidlo b ON b.id_vozidlo = v.id_vozidla"
-						+ " JOIN model m ON m.id_model = b.id_modely"
-						+ " JOIN znacka z ON z.id_znacka = m.id_znacky"
-						+ " WHERE cislo_linka = "
-						+ vg.getTextField_1().getText()
-						+ " GROUP BY (model_name)" + " ORDER BY count(*) DESC"
-						+ " LIMIT 1";
-				try {
-					tableManager.update(table, q);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				tableManager.vypravaNajcastejsieVypravovanyModel(table, vg.getTextField_1().getText());				  
+				/*
+				 * String q = "SELECT znacka_name, model_name FROM vyprava v" +
+				 * " JOIN linka l ON l.id_linka = v.id_linky" +
+				 * " JOIN vozidlo b ON b.id_vozidlo = v.id_vozidla" +
+				 * " JOIN model m ON m.id_model = b.id_modely" +
+				 * " JOIN znacka z ON z.id_znacka = m.id_znacky" +
+				 * " WHERE cislo_linka = " + vg.getTextField_1().getText() +
+				 * " GROUP BY (model_name)" + " ORDER BY count(*) DESC" +
+				 * " LIMIT 1"; try { tableManager.update(table, q); } catch
+				 * (SQLException e) { e.printStackTrace(); }
+				 */
+				tableManager.vypravaNajcastejsieVypravovanyModel(table, vg
+						.getTextField_1().getText());
 			}
 		});
 
@@ -152,11 +149,11 @@ public class VypravaLogika {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
-							lastUsedString = "SELECT b.vozidlo_cislo, z.znacka_name, m.model_name, count(*) FROM vyprava v " +
-									" JOIN vozidlo b ON b.id_vozidlo = v.id_vozidla " +
-									" JOIN model m ON m.id_model = b.id_modely JOIN znacka z ON z.id_znacka = m.id_znacky " +
-									" GROUP BY b.vozidlo_cislo " +
-									" ORDER BY count(*) ";
+							lastUsedString = "SELECT b.vozidlo_cislo, z.znacka_name, m.model_name, count(*) FROM vyprava v "
+									+ " JOIN vozidlo b ON b.id_vozidlo = v.id_vozidla "
+									+ " JOIN model m ON m.id_model = b.id_modely JOIN znacka z ON z.id_znacka = m.id_znacky "
+									+ " GROUP BY b.vozidlo_cislo "
+									+ " ORDER BY count(*) ";
 							System.out.println(lastUsedString + "DESC");
 							tableManager
 									.update(table, lastUsedString + " DESC");
@@ -263,8 +260,7 @@ public class VypravaLogika {
 				vg.getComboBox_1().setSelectedIndex(-1);
 			}
 		});
-		
-		
+
 		vg.getBtnVpravaVObdob().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String qr1 = "SELECT id_vyprava, cislo_linka, vozidlo_cislo, datum_vyprava, id_vodici FROM vyprava v JOIN linka l ON l.id_linka = v.id_linky JOIN vozidlo b ON b.id_vozidlo = v.id_vozidla "
@@ -289,13 +285,12 @@ public class VypravaLogika {
 				try {
 					tableManager.update(table, qr1);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
 		});
-		
+
 		ActionListener actionListener1 = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if ("datum_vyprava"

@@ -1,15 +1,12 @@
 package database;
 
 import java.sql.Connection;
-
-import map_objects.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -17,25 +14,22 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import map_objects.Linka;
 import map_objects.Model;
+import map_objects.Vodic;
+import map_objects.Vozidlo;
 import map_objects.Vyprava;
-import map_objects.Znacka;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
-
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.Type;
 
@@ -121,10 +115,12 @@ public class TableManager {
 
 	/************** POUZITIE MAPOVACA *************/
 
+	@SuppressWarnings("unchecked")
 	public void vodicVypisPodlaPoctuNehod(JTable table) {
 		Session session = sf.openSession();
 		Transaction t = session.beginTransaction();
 
+		@SuppressWarnings("deprecation")
 		Criteria c = session
 				.createCriteria(Vodic.class, "vodic")
 				.createAlias("vodic.vypravy", "vyprava",
@@ -160,10 +156,12 @@ public class TableManager {
 		updateTableWithData(table, results, collumns);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void vodicVypisPodlaSposobenejSkody(JTable table) {
 		Session session = sf.openSession();
 		Transaction t = session.beginTransaction();
 
+		@SuppressWarnings("deprecation")
 		Criteria c = session
 				.createCriteria(Vodic.class, "vodic")
 				.createAlias("vodic.vypravy", "vyprava",
@@ -201,6 +199,7 @@ public class TableManager {
 		updateTableWithData(table, results, collumns);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void vozidlaPriemernyVek(JTable table) {
 		Session session = sf.openSession();
 		Transaction t = session.beginTransaction();
@@ -231,6 +230,7 @@ public class TableManager {
 		updateTableWithData(table, results, collumns);
 	}
 
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	public void vozidlaNajdlhsieOdstavene(JTable table) {
 		Session session = sf.openSession();
 		Transaction t = session.beginTransaction();
@@ -277,6 +277,7 @@ public class TableManager {
 		updateTableWithData(table, results, collumns);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void vypravaNajcastejsieVypravovanyModel(JTable table, String cislo) {
 		Session session = sf.openSession();
 		Transaction t = session.beginTransaction();
@@ -319,7 +320,6 @@ public class TableManager {
 		try {
 			table.setModel(buildTableModel(results, collumns));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -343,6 +343,7 @@ public class TableManager {
 		// Session session = em.unwrap(Session.class);
 		SessionFactoryImplementor sfi = (SessionFactoryImplementor) session
 				.getSessionFactory();
+		@SuppressWarnings("deprecation")
 		ConnectionProvider cp = sfi.getConnectionProvider();
 		Connection conn = cp.getConnection();
 		ps = conn.prepareStatement(query);
@@ -380,6 +381,7 @@ public class TableManager {
 
 		SessionFactoryImplementor sfi = (SessionFactoryImplementor) session
 				.getSessionFactory();
+		@SuppressWarnings("deprecation")
 		ConnectionProvider cp = sfi.getConnectionProvider();
 		Connection conn = cp.getConnection();
 		ps = conn.prepareStatement(query);
@@ -406,6 +408,7 @@ public class TableManager {
 
 			SessionFactoryImplementor sfi = (SessionFactoryImplementor) session
 					.getSessionFactory();
+			@SuppressWarnings("deprecation")
 			ConnectionProvider cp = sfi.getConnectionProvider();
 			Connection conn = cp.getConnection();
 			ps = conn.prepareStatement(query);
@@ -413,7 +416,6 @@ public class TableManager {
 			conn.commit();
 			cp.closeConnection(conn);
 		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -434,6 +436,7 @@ public class TableManager {
 
 		SessionFactoryImplementor sfi = (SessionFactoryImplementor) session
 				.getSessionFactory();
+		@SuppressWarnings("deprecation")
 		ConnectionProvider cp = sfi.getConnectionProvider();
 		Connection conn = cp.getConnection();
 

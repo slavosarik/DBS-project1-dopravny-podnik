@@ -1,23 +1,25 @@
 package logic;
 
-import java.awt.event.*;
-import javax.swing.*;
-
-import map_objects.Model;
-import map_objects.Vozidlo;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.Type;
-
-import database.TableManager;
-import gui.*;
-import vozidla.*;
-import java.sql.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.Calendar;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import vozidla.NehodyPridanie;
+import vozidla.PoruchaPridanie;
+import vozidla.PridanieModelu;
+import vozidla.PridanieZnacky;
+import vozidla.VozidlaGui;
+import vozidla.VozidloDetaily;
+import vozidla.VozidloPridanie;
+import vozidla.VozidloZmena;
+import database.TableManager;
 
 public class VozidloLogika {
 
@@ -30,6 +32,7 @@ public class VozidloLogika {
 	private TableManager tableManager;
 	final String query = "SELECT id_vozidlo, vozidlo_cislo, znacka_name, model_name, vozovna  FROM vozidlo v JOIN model m ON v.id_modely = m.id_model JOIN znacka z ON z.id_znacka = m.id_znacky";
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VozidloLogika() throws SQLException {
 		tableManager = TableManager.getSingletonObject();
 		vg = new VozidlaGui();
@@ -179,46 +182,46 @@ public class VozidloLogika {
 		vg.getBtnNajporuchovejieVozidlo().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						/*String q = " SELECT vozidlo_cislo, znacka_name, model_name, YEAR(now()) -rok_zaradenia AS vek, " +
-								" COALESCE(SUM(DATEDIFF(datum_do,datum_od)),0) odstavka FROM vozidlo v " +
-								" LEFT JOIN porucha p ON p.id_vozidla = v.id_vozidlo " +
-								" JOIN model m ON m.id_model = v.id_modely " +
-								" JOIN znacka z ON z.id_znacka = m.id_znacky " +
-								" GROUP BY vozidlo_cislo " +
-								" ORDER BY odstavka DESC ";
-						try {
-							tableManager.update(table, q);
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}*/
+						/*
+						 * String q =
+						 * " SELECT vozidlo_cislo, znacka_name, model_name, YEAR(now()) -rok_zaradenia AS vek, "
+						 * +
+						 * " COALESCE(SUM(DATEDIFF(datum_do,datum_od)),0) odstavka FROM vozidlo v "
+						 * +
+						 * " LEFT JOIN porucha p ON p.id_vozidla = v.id_vozidlo "
+						 * + " JOIN model m ON m.id_model = v.id_modely " +
+						 * " JOIN znacka z ON z.id_znacka = m.id_znacky " +
+						 * " GROUP BY vozidlo_cislo " +
+						 * " ORDER BY odstavka DESC "; try {
+						 * tableManager.update(table, q); } catch (SQLException
+						 * e1) { e1.printStackTrace(); }
+						 */
 						tableManager.vozidlaNajdlhsieOdstavene(table);
-						
+
 					}
 				});
 
 		vg.getBtnNewButton_4().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*String q = " SELECT model_name, ROUND(AVG(YEAR(now()) - rok_zaradenia)) AS vek FROM model m 
-				 * JOIN vozidlo v ON m.id_model = v.id_modely 
-				 * GROUP BY model_name 
-				 * ORDER BY vek DESC";
-				try {
-					tableManager.update(table, q);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				*/
+				/*
+				 * String q = " SELECT model_name, ROUND(AVG(YEAR(now()) -
+				 * rok_zaradenia)) AS vek FROM model m JOIN vozidlo v ON
+				 * m.id_model = v.id_modely GROUP BY model_name ORDER BY vek
+				 * DESC"; try { tableManager.update(table, q); } catch
+				 * (SQLException e1) { e1.printStackTrace(); }
+				 */
 				tableManager.vozidlaPriemernyVek(table);
-				/*Criteria c = session.createCriteria(Model.class, "model")
-				.createAlias("model.vozidla", "vozidlo")
-				.addOrder(Order.desc("vek"))
-				.setProjection(Projections.projectionList()
-						.add(Projections.property("model_name"), "model_name")				
-						.add(Projections.sqlProjection("ROUND(AVG(YEAR(now()) - rok_zaradenia)) AS vek",
-						new String[]{"vek"}, new Type[]{new IntegerType()}), "vek")
-						.add(Projections.groupProperty("model_name")));*/
+				/*
+				 * Criteria c = session.createCriteria(Model.class, "model")
+				 * .createAlias("model.vozidla", "vozidlo")
+				 * .addOrder(Order.desc("vek"))
+				 * .setProjection(Projections.projectionList()
+				 * .add(Projections.property("model_name"), "model_name")
+				 * .add(Projections
+				 * .sqlProjection("ROUND(AVG(YEAR(now()) - rok_zaradenia)) AS vek"
+				 * , new String[]{"vek"}, new Type[]{new IntegerType()}), "vek")
+				 * .add(Projections.groupProperty("model_name")));
+				 */
 			}
 		});
 
@@ -369,7 +372,6 @@ public class VozidloLogika {
 			}
 		});
 
-		
 		ActionListener actionListener1 = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if ("datum_vyprava"

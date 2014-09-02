@@ -1,20 +1,22 @@
 package vodic;
 
-
-import javax.swing.*;
-
-import database.TableManager;
-
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class VodiciGui {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JTable table;
-	
 
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
@@ -26,15 +28,13 @@ public class VodiciGui {
 	private JButton btnObnovi;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_1;
-	
-
 
 	public VodiciGui() throws SQLException {
 		initialize();
 		frame.setVisible(true);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	private void initialize() throws SQLException {
 
 		frame = new JFrame();
@@ -53,7 +53,7 @@ public class VodiciGui {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
+
 		table.setRowSelectionAllowed(true);
 		table.setColumnSelectionAllowed(false);
 		table.setToolTipText("Pre usporiadaný výber kliknite na header.");
@@ -83,14 +83,14 @@ public class VodiciGui {
 				textField.setVisible(true);
 			}
 		};
-		comboBox.addActionListener(actionListener1);		
+		comboBox.addActionListener(actionListener1);
 
 		textField = new JTextField();
-		textField.setBounds(209, 326, 152, 20);		
+		textField.setBounds(209, 326, 152, 20);
 		textField.setColumns(10);
 		textField.setVisible(false);
 		panel.add(textField);
-		
+
 		btnObnovi = new JButton("Obnovi\u0165");
 		btnObnovi.setBounds(10, 428, 180, 23);
 		panel.add(btnObnovi);
@@ -98,49 +98,61 @@ public class VodiciGui {
 		btnNewButton = new JButton("Detaily zamestnanca");
 		btnNewButton.setBounds(10, 326, 180, 23);
 		panel.add(btnNewButton);
-		
+
 		btnNewButton_1 = new JButton("Najviac sp\u00F4soben\u00FDch neh\u00F4d");
 		btnNewButton_1.setBounds(10, 360, 180, 23);
 		panel.add(btnNewButton_1);
-		
+
 		btnNewButton_2 = new JButton("Najviac \u0161kodov\u00FD vodi\u010Di");
 		btnNewButton_2.setBounds(10, 394, 180, 23);
 		panel.add(btnNewButton_2);
-		
+
 	}
+
 	public JTable getTable() {
 		return table;
 	}
+
 	public JButton getBtnPridanieZamestnanca() {
 		return btnPridanieZamestnanca;
 	}
+
 	public JButton getBtnZmenaDetailov() {
 		return btnZmenaDetailov;
 	}
+
 	public JButton getBtnPrepustenieZamestnanca() {
 		return btnPrepustenieZamestnanca;
 	}
+
 	public JFrame getFrame() {
 		return frame;
 	}
+
 	public JButton getBtnVyh() {
 		return btnVyh;
 	}
-	public JComboBox getComboBox() {
+
+	public JComboBox<?> getComboBox() {
 		return comboBox;
 	}
+
 	public JTextField getTextField() {
 		return textField;
 	}
+
 	public JButton getBtnNewButton() {
 		return btnNewButton;
 	}
+
 	public JButton getBtnObnovi() {
 		return btnObnovi;
 	}
+
 	public JButton getBtnNewButton_2() {
 		return btnNewButton_2;
 	}
+
 	public JButton getBtnNewButton_1() {
 		return btnNewButton_1;
 	}

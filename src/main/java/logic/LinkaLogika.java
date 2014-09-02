@@ -1,12 +1,18 @@
 package logic;
 
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import linka.LinkaGui;
+import linka.LinkaPridanie;
+import linka.LinkaZmena;
 import database.TableManager;
-import gui.*;
-import linka.*;
-import java.sql.*;
 
 public class LinkaLogika {
 
@@ -108,7 +114,7 @@ public class LinkaLogika {
 			public void actionPerformed(ActionEvent e) {
 				lz = new LinkaZmena();
 				registerButtonsLinkaZmena(lz);
-				
+
 			}
 		});
 

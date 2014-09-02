@@ -5,29 +5,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import map_objects.Vodic;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-
-import database.TableManager;
-
 import vodic.VodiciGui;
 import vodic.VodiciPridanie;
 import vodic.VodiciZmena;
-import vozidla.PridanieModelu;
-import vozidla.PridanieZnacky;
-import vozidla.VozidlaGui;
-import vozidla.VozidloPridanie;
+import database.TableManager;
 
 public class VodicLogika {
 
@@ -39,6 +25,7 @@ public class VodicLogika {
 	private TableManager tableManager;
 	final String query = "SELECT * FROM vodic";
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VodicLogika() throws SQLException {
 		tableManager = TableManager.getSingletonObject();
 		vg = new VodiciGui();
@@ -191,43 +178,40 @@ public class VodicLogika {
 
 		vg.getBtnNewButton_1().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*final String query1 = "SELECT id_vodic, vodic_meno, vodic_priezvisko, count(id_nehoda) AS pocet_nehod FROM vodic vod " +
-						"LEFT JOIN vyprava vy ON vod.id_vodic = vy.id_vodici " +
-						"LEFT JOIN nehoda n ON (vy.id_vozidla = n.id_vozidla AND vy.datum_vyprava = n.datum_nehody) " +
-						"GROUP BY id_vodic " +
-						"ORDER BY pocet_nehod ";
-				try {
-					lastUsedString = query1 + "DESC";
-					System.out.println(lastUsedString);
-					tableManager.update(table, lastUsedString);
-				} catch (SQLException e11) {
-					e11.printStackTrace();
-				}*/
-				
+				/*
+				 * final String query1 =
+				 * "SELECT id_vodic, vodic_meno, vodic_priezvisko, count(id_nehoda) AS pocet_nehod FROM vodic vod "
+				 * + "LEFT JOIN vyprava vy ON vod.id_vodic = vy.id_vodici " +
+				 * "LEFT JOIN nehoda n ON (vy.id_vozidla = n.id_vozidla AND vy.datum_vyprava = n.datum_nehody) "
+				 * + "GROUP BY id_vodic " + "ORDER BY pocet_nehod "; try {
+				 * lastUsedString = query1 + "DESC";
+				 * System.out.println(lastUsedString);
+				 * tableManager.update(table, lastUsedString); } catch
+				 * (SQLException e11) { e11.printStackTrace(); }
+				 */
+
 				tableManager.vodicVypisPodlaPoctuNehod(table);
-				
-				
+
 			}
 
 		});
 
 		vg.getBtnNewButton_2().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*final String query1 = "SELECT id_vodic, vodic_meno, vodic_priezvisko, COALESCE(sum(skoda), 0) AS sposobene_skody FROM vodic vod " +
-						"LEFT JOIN vyprava vy ON vod.id_vodic = vy.id_vodici " +
-						"LEFT JOIN nehoda n ON (vy.id_vozidla = n.id_vozidla AND vy.datum_vyprava = n.datum_nehody) " +
-						"GROUP BY id_vodic " +
-						"ORDER BY sposobene_skody ";
-				try {
-					lastUsedString = query1 + "DESC";
-					System.out.println(lastUsedString);
-					tableManager.update(table, lastUsedString);
-					table.setRowSelectionAllowed(true);
-					table.setColumnSelectionAllowed(false);
-				} catch (SQLException e11) {
-					e11.printStackTrace();
-				}*/
-				tableManager.vodicVypisPodlaSposobenejSkody(table);				
+				/*
+				 * final String query1 =
+				 * "SELECT id_vodic, vodic_meno, vodic_priezvisko, COALESCE(sum(skoda), 0) AS sposobene_skody FROM vodic vod "
+				 * + "LEFT JOIN vyprava vy ON vod.id_vodic = vy.id_vodici " +
+				 * "LEFT JOIN nehoda n ON (vy.id_vozidla = n.id_vozidla AND vy.datum_vyprava = n.datum_nehody) "
+				 * + "GROUP BY id_vodic " + "ORDER BY sposobene_skody "; try {
+				 * lastUsedString = query1 + "DESC";
+				 * System.out.println(lastUsedString);
+				 * tableManager.update(table, lastUsedString);
+				 * table.setRowSelectionAllowed(true);
+				 * table.setColumnSelectionAllowed(false); } catch (SQLException
+				 * e11) { e11.printStackTrace(); }
+				 */
+				tableManager.vodicVypisPodlaSposobenejSkody(table);
 			}
 
 		});

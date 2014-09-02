@@ -1,20 +1,15 @@
 package vodic;
 
+import java.awt.Font;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import database.TableManager;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
 
 public class VodiciZmena {
 
@@ -85,24 +80,28 @@ public class VodiciZmena {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 
-		
-
 	}
+
 	public JTextField getTextField() {
 		return textField;
 	}
+
 	public JTextField getTextField_1() {
 		return textField_1;
 	}
+
 	public JButton getBtnPrida() {
 		return btnPrida;
 	}
+
 	public JTextField getTextField_2() {
 		return textField_2;
 	}
+
 	public JFrame getFrame() {
 		return frame;
 	}
+
 	public JPanel getPanel() {
 		return panel;
 	}

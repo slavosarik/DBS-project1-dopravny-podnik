@@ -1,18 +1,18 @@
 package vozidla;
 
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import com.toedter.calendar.JDateChooser;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 import com.toedter.calendar.JYearChooser;
 
 import database.TableManager;
@@ -47,7 +47,7 @@ public class VozidloZmena {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JButton btnPrida = new JButton("Potvrdi\u0165 zmeny");		
+		JButton btnPrida = new JButton("Potvrdi\u0165 zmeny");
 		btnPrida.setBounds(10, 171, 201, 23);
 		panel.add(btnPrida);
 
@@ -91,7 +91,7 @@ public class VozidloZmena {
 		yearChooser = new JYearChooser();
 		yearChooser.setBounds(125, 137, 86, 23);
 		panel.add(yearChooser);
-		
+
 		btnPrida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int year = yearChooser.getYear();
@@ -102,7 +102,7 @@ public class VozidloZmena {
 						+ textField_2.getText() + "', rok_zaradenia = " + year
 						+ " WHERE id_vozidlo = " + id;
 
-				//System.out.println("Queryyyyyy: " + query);
+				// System.out.println("Queryyyyyy: " + query);
 				try {
 					tableManager.updateItem(table, query);
 				} catch (SQLException e) {
@@ -110,7 +110,7 @@ public class VozidloZmena {
 				}
 
 				query = "SELECT id_vozidlo, vozidlo_cislo, znacka_name, model_name, vozovna  FROM vozidlo v JOIN model m ON v.id_modely = m.id_model JOIN znacka z ON z.id_znacka = m.id_znacky ORDER BY id_vozidlo";
-				//System.out.println("Queryaaa: " + query);
+				// System.out.println("Queryaaa: " + query);
 				try {
 					tableManager.update(table, query);
 					table.setRowSelectionAllowed(true);
@@ -118,7 +118,7 @@ public class VozidloZmena {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 				JOptionPane.showMessageDialog(panel, "Zaznam bol pridany.", "",
 						JOptionPane.INFORMATION_MESSAGE);
 				frame.dispose();

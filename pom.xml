@@ -49,8 +49,6 @@
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
 		</dependency>
-
-
 	</dependencies>
 	<build>
 		<plugins>
@@ -160,7 +158,6 @@
 							<outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
 						</configuration>
 					</execution>
-
 					<execution>
 						<id>copy-dependencies_8</id>
 						<phase>package</phase>
