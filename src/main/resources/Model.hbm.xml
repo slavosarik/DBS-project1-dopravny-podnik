@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+ <hibernate-mapping>
+  <class name="map_objects.Model" table="model">
+    <id name="id_model">
+     <generator class="native"></generator>
+    </id>   
+    
+    <property name="motor_objem"></property>
+    <property name="motor_vykon"></property>
+    <property name="pocet_dveri"></property>
+    <property name="hmotnost"></property>
+    <property name="kapacita"></property>
+    <property name="model_name"></property>
+    <property name="farba"></property>
+
+    <many-to-one name="znacka" class="map_objects.Znacka" fetch="select">
+            <column name="id_znacky" not-null="true" />
+        </many-to-one>
+   <set name="vozidla" table="vozidlo" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_modely" not-null="true" />
+            </key>
+            <one-to-many class="map_objects.Vozidlo" />
+        </set>  
+
+
+</class>
+          
+ </hibernate-mapping>

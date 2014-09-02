@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+ <hibernate-mapping>
+  <class name="map_objects.Vozidlo" table="vozidlo">
+    <id name="id_vozidlo">
+     <generator class="assigned"></generator>
+    </id>
+    
+    <property name="vozidlo_cislo"></property>
+    <property name="rok_zaradenia"></property>
+    <property name="vozovna"></property>
+    <set name="vypravy" table="vyprava" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_vozidla" not-null="true" />
+            </key>
+            <one-to-many class="map_objects.Vyprava" />
+        </set>  
+
+    <many-to-one name="model" class="map_objects.Model" fetch="select">
+            <column name="id_modely" not-null="true" />
+        </many-to-one> 
+
+    <set name="nehody" table="Nehoda" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_vozidla" not-null="true" />
+            </key>
+            <one-to-many class="map_objects.Nehoda" />
+        </set>     
+
+    <set name="poruchy" table="Porucha" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_vozidla" not-null="true" />
+            </key>
+            <one-to-many class="map_objects.Porucha" />
+        </set> 
+  
+</class>
+          
+ </hibernate-mapping>

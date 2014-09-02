@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+ <hibernate-mapping>
+
+  <class name="map_objects.Znacka" table="znacka">
+    <id name="id_znacka">
+     <generator class="native"></generator>
+    </id>
+    
+    <property name="znacka_name"></property>
+    <property name="krajina"></property>
+
+    <set name="modely" table="model" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_znacky" not-null="true" />
+            </key>
+            <one-to-many class="map_objects.Model" />
+        </set>  	
+          
+  </class>
+          
+ </hibernate-mapping>

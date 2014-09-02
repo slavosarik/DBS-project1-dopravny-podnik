@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+ <hibernate-mapping>
+  <class name="map_objects.Vyprava" table="vyprava">
+    <id name="id_vyprava">
+     <generator class="native"></generator>
+    </id>
+    
+    <property name="datum_vyprava"></property>
+
+    <many-to-one name="vodic" class="map_objects.Vodic" fetch="select">
+            <column name="id_vodici" not-null="true" />
+        </many-to-one>
+
+    <many-to-one name="linka" class="map_objects.Linka" fetch="select">
+            <column name="id_linky" not-null="true" />
+        </many-to-one>
+
+    <many-to-one name="vozidlo" class="map_objects.Vozidlo" fetch="select">
+            <column name="id_vozidla" not-null="true" />
+        </many-to-one>
+          
+  </class>
+          
+ </hibernate-mapping>
